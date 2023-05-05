@@ -46,7 +46,12 @@ if __name__ == "__main__":
             print(f"{lang} not supported, ignoring...\n")
             continue
         # segment audio based on segment results
-        character_name = file.rstrip(".wav").split("_")[0]
+        if "_" in file:
+            character_name = file.rstrip(".wav").split("_")[0]
+        elif "-" in file:
+            character_name = file.rstrip(".wav").split("_")[0]
+        else:
+            assert False, "Please assure _ or - in filename for character_name split"
         code = file.rstrip(".wav").split("_")[1]
         if not os.path.exists("./segmented_character_voice/" + character_name):
             os.mkdir("./segmented_character_voice/" + character_name)
