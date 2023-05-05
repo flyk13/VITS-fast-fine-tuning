@@ -48,11 +48,13 @@ if __name__ == "__main__":
         # segment audio based on segment results
         if "_" in file:
             character_name = file.rstrip(".wav").split("_")[0]
+            code = file.rstrip(".wav").split("_")[1]
         elif "-" in file:
-            character_name = file.rstrip(".wav").split("_")[0]
+            character_name = file.rstrip(".wav").split("-")[0]
+            code = file.rstrip(".wav").split("-")[1]
         else:
             assert False, "Please assure _ or - in filename for character_name split"
-        code = file.rstrip(".wav").split("_")[1]
+        # code = file.rstrip(".wav").split("_")[1]
         if not os.path.exists("./segmented_character_voice/" + character_name):
             os.mkdir("./segmented_character_voice/" + character_name)
         wav, sr = torchaudio.load(parent_dir + file, frame_offset=0, num_frames=-1, normalize=True,
