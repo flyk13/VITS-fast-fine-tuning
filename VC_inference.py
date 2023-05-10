@@ -87,7 +87,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="./G_latest.pth", help="directory to your fine-tuned model")
     parser.add_argument("--config_dir", default="./finetune_speaker.json", help="directory to your model config file")
-    parser.add_argument("--share", default=False, help="make link public (used in colab)")
+    # parser.add_argument("--share", default=False, help="make link public (used in colab)")
+    parser.add_argument("--share", action="store_true", help="make link public (used in colab)")
+    parser.add_argument("--server_name", default="0.0.0.0", help="gradio server ip")
+    parser.add_argument("--server_port", default=9000, help="gradio server port")
 
     args = parser.parse_args()
     hps = utils.get_hparams_from_file(args.config_dir)
@@ -141,6 +144,6 @@ if __name__ == "__main__":
             btn = gr.Button("Convert!")
             btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio],
                       outputs=[message_box, converted_audio])
-    webbrowser.open("http://127.0.0.1:7860")
-    app.launch(share=args.share)
+    # webbrowser.open("http://127.0.0.1:7860")
+    app.launch(share=args.share, server_name=args.server_name, server_port=args.server_port)
 
